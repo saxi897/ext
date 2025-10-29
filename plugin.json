@@ -1,0 +1,42 @@
+{
+	"metadata": {
+		"author": "saxi",
+		"description": "Vbook extension"
+	},
+	"data": [
+		{
+			"name": "tấn giang",
+			"author": "saxi",
+			"path": "https://raw.githubusercontent.com/saxi897/ext/main/tangiang.zip",
+			"version": 36,
+			"source": "https://www.jjwxc.net/",
+			"icon": "https://raw.githubusercontent.com/saxi897/ext/main/icon/tangiang.png",
+			"description": "Đọc truyện trên trang tấn giang, ext sửa chatgpt",
+			"type": "chinese_novel",
+			"locale": "zh_CN"
+		},
+		{
+			"name": "fqapi",
+			"author": "saxi",
+			"path": "https://raw.githubusercontent.com/saxi897/ext/main/fqapi.zip",
+			"version": 2,
+			"source": "https://fanqienovel.com",
+			"icon": "https://raw.githubusercontent.com/saxi897/ext/main/icon/fqapi.png",
+			"description": "Đọc Truyện fanqienovel",
+			"type": "chinese_novel",
+			"locale": "zh_CN"
+		},
+		{
+			"name": "gongzicp",
+			"author": "saxi",
+			"path": "https://raw.githubusercontent.com/saxi897/ext/main/gongzicp.zip",
+			"version": 1,
+			"source": "https://vozer.io",
+			"icon": "https://raw.githubusercontent.com/saxi897/ext/main/icon/gongzicp.png",
+			"description": "Đọc Truyện gongzicp",
+			"type": "chinese_novel",
+			"locale": "zh_CN"
+		}
+
+	]
+}
