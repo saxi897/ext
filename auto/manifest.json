@@ -1,0 +1,33 @@
+{
+"manifest_version": 3,
+"name": "TXTNovel Auto Downloader",
+"version": "1.0",
+"description": "Auto click, auto comment, auto download file .rar từ thread Discuz.",
+"permissions": [
+"tabs",
+"scripting",
+"activeTab",
+"downloads",
+"storage"
+],
+"host_permissions": [
+"http://www.txtnovel.vip/*"
+],
+"background": {
+"service_worker": "background.js"
+},
+"content_scripts": [
+{
+"matches": [
+"http://www.txtnovel.vip/forum-*",
+"http://www.txtnovel.vip/forum.php?mod=forumdisplay&fid=*"
+],
+"js": ["content_list.js"],
+"css": ["ui.css"]
+},
+{
+"matches": ["http://www.txtnovel.vip/forum.php?mod=viewthread*"],
+"js": ["content_thread.js"]
+}
+]
+}
