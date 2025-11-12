@@ -1,0 +1,16 @@
+#autoController {
+position: fixed;
+top: 50%;
+right: 20px;
+transform: translateY(-50%);
+background: #ff5722;
+color: white;
+padding: 12px 20px;
+border-radius: 12px;
+cursor: pointer;
+z-index: 999999;
+font-size: 16px;
+user-select: none;
+font-weight: bold;
+box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
