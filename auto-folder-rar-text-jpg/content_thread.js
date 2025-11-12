@@ -30,7 +30,7 @@
         url: rarLink.href,
         filename: folder + safeTitle + '.rar'
       });
-      await wait(1500);
+      await wait(5000);
     }
 
     // === 6️⃣ Tải hình nếu có ===
@@ -41,7 +41,7 @@
         url: img.src,
         filename: folder + safeTitle + '_cover.' + imgExt
       });
-      await wait(1500);
+      await wait(5000);
     }
 
     // === 7️⃣ Tải text nếu có ===
@@ -53,7 +53,7 @@
         url: url,
         filename: folder + safeTitle + '.txt'
       });
-      await wait(1500);
+      await wait(5000);
     }
 
     // === 8️⃣ Báo hoàn thành về parent ===
@@ -86,4 +86,5 @@
       await downloadAll();
     }
   });
+
 })();
