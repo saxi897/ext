@@ -22,8 +22,7 @@
         "*://*.txtnovel.vip/forum-*",
         "*://*.txtnovel.vip/forum.php?mod=forumdisplay&fid=*"
       ],
-      "js": ["content_list.js"],
-      "css": ["ui.css"]
+      "js": ["content_list.js"]
     },
     {
     "matches": ["*://*.txtnovel.vip/*"],
