@@ -1,38 +1,33 @@
-// background.js
+importScripts('jszip.min.js'); // nếu dùng background page, hoặc import nếu MV3
 
 chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
-    console.log("📩 Background nhận message:", msg);
+  if (msg.action !== 'zip_and_download') return;
 
-    // ✅ Mở thread mới để download
-    if (msg.action === "open_thread" && msg.url) {
-        chrome.tabs.create({ url: msg.url, active: false }, tab => {
-            chrome.storage.local.set({ currentTab: tab.id });
-        });
+  (async () => {
+    const zip = new JSZip();
+    const folder = zip.folder(msg.folder);
+
+    /* fetch rar & jpg, add blob txt */
+    for (const f of msg.files) {
+      if (f.blob) {
+        folder.file(f.name, f.blob);
+      } else {
+        const res = await fetch(f.url);
+        const blob = await res.blob();
+        folder.file(f.name, blob);
+      }
     }
 
-    // ✅ Tiến hành download (RAR / hình / TXT)
-    if (msg.action === "download_file" && msg.url && msg.filename) {
-        chrome.downloads.download({
-            url: msg.url,
-            filename: msg.filename,
-            saveAs: false
-        }, downloadId => {
-            if (chrome.runtime.lastError) {
-                console.error("❌ Download lỗi:", chrome.runtime.lastError.message);
-            } else {
-                console.log("⬇️ Download:", msg.filename);
-            }
-        });
-    }
+    /* tạo zip & tải */
+    const zipBlob = await zip.generateAsync({ type: 'blob' });
+    const url     = URL.createObjectURL(zipBlob);
+    chrome.downloads.download({
+      url        : url,
+      filename   : msg.folder.replace('/', '') + '.zip',
+      saveAs     : false
+    }, () => URL.revokeObjectURL(url));
+  })();
 
-    // ✅ Đóng tab thread khi xong
-    if (msg.action === "thread_done") {
-        chrome.storage.local.get(["currentTab"], data => {
-            if (data.currentTab) {
-                chrome.tabs.remove(data.currentTab);
-                chrome.storage.local.remove("currentTab");
-            }
-        });
-        chrome.runtime.sendMessage({ action: "next_thread" });
-    }
+  sendResponse(); // non-persistent
+});
 });
