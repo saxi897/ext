@@ -4,33 +4,31 @@
   function safeName(name) { return name.replace(/[\\/:*?"<>|]/g, '_').trim(); }
 
   /* ---------- download ---------- */
-  async function downloadAll() {
-    const title = document.querySelector('#thread_subject')?.textContent.trim() || 'novel';
-    const safeTitle = safeName(title);
-    const folder = safeTitle + '/';
+ async function downloadAll() {
+  const title = document.querySelector('#thread_subject')?.textContent.trim() || 'novel';
+  const safeTitle = safeName(title);
 
-    const rarLink = document.querySelector('p.attnm a[href]');
-    if (rarLink) {
-      chrome.runtime.sendMessage({ action: 'download_file', url: rarLink.href, filename: folder + safeTitle + '.rar' });
-      await wait(1500);
-    }
-    const img = document.querySelector('.t_f img.zoom');
-    if (img?.src) {
-      const imgExt = img.src.split('.').pop().split('?')[0];
-      chrome.runtime.sendMessage({ action: 'download_file', url: img.src, filename: folder + safeTitle + '_cover.' + imgExt });
-      await wait(1500);
-    }
-    const post = document.querySelector('.t_f');
-    const textContent = post?.innerText.trim() || '';
-    if (textContent.length > 50) {
-      const blob = new Blob([textContent], { type: 'text/plain;charset=utf-8' });
-      const url = URL.createObjectURL(blob);
-      chrome.runtime.sendMessage({ action: 'download_file', url: url, filename: folder + safeTitle + '.txt' });
-      await wait(1500);
-    }
+  /* ----- lấy 3 file ----- */
+  const rarLink = document.querySelector('p.attnm a[href]');
+  const img     = document.querySelector('.t_f img.zoom');
+  const post    = document.querySelector('.t_f');
+
+  const files = []; // [{name, url}, ...]
+
+  if (rarLink) files.push({ name: safeTitle + '.rar', url: rarLink.href });
+  if (img?.src) files.push({ name: safeTitle + '_cover.' + img.src.split('.').pop().split('?')[0], url: img.src });
+  if (post) {
+    const txtBlob = new Blob([post.innerText.trim()], { type: 'text/plain;charset=utf-8' });
+    files.push({ name: safeTitle + '.txt', blob: txtBlob });
+  }
+
+  /* ----- gửi background zip ----- */
+  chrome.runtime.sendMessage({ action: 'zip_and_download', files, folder: safeTitle + '/' }, () => {
     if (window.opener) window.opener.postMessage({ action: 'thread_done' }, '*');
     window.close();
-  }
+  });
+}
+
 
   /* ---------- comment ---------- */
   async function startComment() {
@@ -75,3 +73,4 @@
     }, 2000);
   }
 })();
+
