@@ -14,7 +14,9 @@
     "http://www.txtnovel.vip/*"
   ],
   "background": {
-    "service_worker": "background.js"
+  "scripts": ["jszip.min.js", "background.js"],
+  "persistent": false
+}
   },
   "content_scripts": [
     {
