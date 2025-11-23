@@ -23,7 +23,7 @@ function addLog(text) {
   box.appendChild(line);
   box.scrollTop = box.scrollHeight; // auto cuộn
   // giữ tối đa 50 dòng
-  while (box.children.length > 50) box.firstChild.remove();
+  while (box.children.length > 100) box.firstChild.remove();
 }
 
   /* ---------- UI ---------- */

@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "TXTNovel Auto",
-  "version": "1.0",
+  "version": "2.0",
   "description": "Auto click, auto comment, auto download file .rar từ thread Discuz.",
   "permissions": [
     "tabs",
@@ -10,10 +10,15 @@
     "downloads",
     "storage"
 	
+	
   ],
   "host_permissions": [
     "*://*.txtnovel.vip/*"
   ],
+  "action": {
+  "default_popup": "popup.html"
+  
+},
   "background": {
     "service_worker": "background.js"
 	
