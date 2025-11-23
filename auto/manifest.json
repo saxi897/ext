@@ -9,15 +9,16 @@
     "activeTab",
     "downloads",
     "storage"
+	
   ],
   "host_permissions": [
-    "http://www.txtnovel.vip/*"
+    "*://*.txtnovel.vip/*"
   ],
   "background": {
-  "scripts": ["jszip.min.js", "background.js"],
-  "persistent": false
-}
+    "service_worker": "background.js"
+	
   },
+  
   "content_scripts": [
     {
       "matches": [
