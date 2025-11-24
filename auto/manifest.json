@@ -14,7 +14,8 @@
     "*://*.txtnovel.vip/*"
   ],
   "action": {
-    "default_popup": "popup.html"
+    "default_popup": "popup.html",
+	"default_icon": "logo.png"
   },
   "background": {
     "service_worker": "background.js"
