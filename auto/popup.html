@@ -3,15 +3,33 @@
 <head>
   <meta charset="utf-8">
   <style>
-    body{width:120px;margin:0;padding:8px;font-family:system-ui;font-size:13px;}
-    button{width:100%;margin:4px 0;padding:6px;border:none;border-radius:4px;color:#fff;font-weight:600;cursor:pointer;}
-    #btnTxt{background:#10b981;}
-    #btnJpg{background:#3b82f6;}
+    body{width:300px;margin:0;padding:10px;font-family:system-ui;font-size:13px;}
+    textarea,button{width:100%;margin:4px 0;padding:6px;border:1px solid #d1d5db;border-radius:6px;font-size:13px;}
+    button{color:#fff;font-weight:600;cursor:pointer;border:none;}
+    #addLink{background:#10b981;}
+    #startDown{background:#3b82f6;}
+    #startComment{background:#f97316;}
+    #btnTxt{background:#6366f1;}
+    #btnJpg{background:#8b5cf6;}
+    #logArea{border:1px solid #e5e7eb;border-radius:6px;padding:6px;font-family:monospace;font-size:12px;line-height:1.4;max-height:120px;overflow-y:auto;background:#f9fafb;}
   </style>
 </head>
 <body>
-  <button id="btnTxt">📄 Download TXT</button>
-  <button id="btnJpg">🖼 Download JPG</button>
+  <textarea id="linksInput" rows="6" placeholder="Dán nhiều link, mỗi dòng 1 link"></textarea>
+  <button id="addLink">Add Links</button>
+  <button id="startDown">📥 Start Download (rar+txt+jpg)</button>
+  <button id="startComment">💬 Start Comment</button>
+  <button id="btnTxt">📄 Start Download TXT</button>
+  <button id="btnJpg">🖼 Start Download JPG</button>
+  <div id="logArea" title="Log"></div>
   <script src="popup.js"></script>
 </body>
 </html>
+
+
+
+
+
+
+
+

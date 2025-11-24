@@ -9,21 +9,16 @@
     "activeTab",
     "downloads",
     "storage"
-	
-	
   ],
   "host_permissions": [
     "*://*.txtnovel.vip/*"
   ],
   "action": {
-  "default_popup": "popup.html"
-  
-},
+    "default_popup": "popup.html"
+  },
   "background": {
     "service_worker": "background.js"
-	
   },
-  
   "content_scripts": [
     {
       "matches": [
@@ -33,9 +28,15 @@
       "js": ["content_list.js"]
     },
     {
-    "matches": ["*://*.txtnovel.vip/*"],
-    "js": ["content_thread.js"],
-    "run_at": "document_end"
-  }
+      "matches": ["*://*.txtnovel.vip/*"],
+      "js": ["content_thread.js"],
+      "run_at": "document_end"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["content_thread.js"],
+      "matches": ["*://*.txtnovel.vip/*"]
+    }
   ]
 }

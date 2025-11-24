@@ -1,5 +1,4 @@
 // background.js
-
 chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
     console.log("📩 Background nhận message:", msg);
 
@@ -27,12 +26,24 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
 
     // ✅ Đóng tab thread khi xong
     if (msg.action === "thread_done") {
-        chrome.storage.local.get(["currentTab"], data => {
-            if (data.currentTab) {
-                chrome.tabs.remove(data.currentTab);
-                chrome.storage.local.remove("currentTab");
-            }
-        });
-        chrome.runtime.sendMessage({ action: "next_thread" });
+        console.log("✅ Thread hoàn thành, đóng tab");
+        if (sender.tab?.id) {
+            chrome.tabs.remove(sender.tab.id);
+        }
+        // Gửi signal để popup biết thread đã xong
+        chrome.runtime.sendMessage({ action: "thread_done" });
     }
+    
+    if (msg.action === 'run') {
+        // mở tab con của thread
+        chrome.tabs.create({ url: msg.url + '#' + msg.mode, active: false }, tab => {
+            setTimeout(() => {
+                chrome.tabs.remove(tab.id);
+                sendResponse();
+            }, 2000);
+        });
+    }
+
+    sendResponse();
+    return true;
 });

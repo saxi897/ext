@@ -22,8 +22,8 @@ function addLog(text) {
   line.textContent = '[LIST] ' + text;
   box.appendChild(line);
   box.scrollTop = box.scrollHeight; // auto cuộn
-  // giữ tối đa 50 dòng
-  while (box.children.length > 100) box.firstChild.remove();
+  // giữ tối đa 350 dòng
+  while (box.children.length > 350) box.firstChild.remove();
 }
 
   /* ---------- UI ---------- */
@@ -123,39 +123,99 @@ function initUI() {
     if (newRunning) startProcessing(mode);
   }
 
-  async function startProcessing(type) {
-    const tbodiesAll = Array.from(document.querySelectorAll('#threadlist table > tbody[id^="normalthread_"]'));
-    const tbodies = tbodiesAll.slice(startIdx - 1, endIdx);
-    addLog('[LIST] Xử lý từ', startIdx, '→', endIdx, '/ tổng', tbodiesAll.length);
+async function startProcessing(type) {
+  const tbodiesAll = Array.from(document.querySelectorAll('#threadlist table > tbody[id^="normalthread_"]'));
+  const tbodies = tbodiesAll.slice(startIdx - 1, endIdx);
+  addLog('[LIST] Xử lý từ ' + startIdx + ' → ' + endIdx + ' / tổng ' + tbodiesAll.length);
 
-    for (let i = 0; i < tbodies.length; i++) {
-      if ((type === 'comment' && !runningComment) || (type === 'download' && !runningDownload)) break;
-      const a = tbodies[i].querySelector('th.new a.xst, th.common a.xst, th.lock a.xst');
-      if (!a) continue;
-      addLog('[LIST] Mở link:', a.href, '(link số ' + (startIdx + i) + ')');
-      const mode = type === 'comment' ? 'comment' : 'download';
-      const tab = window.open(a.href + '#' + mode, '_blank');
-      if (!tab) continue;
+  for (let i = 0; i < tbodies.length; i++) {
+    if ((type === 'comment' && !runningComment) || (type === 'download' && !runningDownload)) break;
+    const a = tbodies[i].querySelector('th.new a.xst, th.common a.xst, th.lock a.xst');
+    if (!a) continue;
+    addLog('[LIST] Mở link: ' + a.href + ' (link số ' + (startIdx + i) + ')');
+    
+    // Mở tab
+    const tab = window.open(a.href, '_blank');
+    if (!tab) continue;
 
-      await new Promise(resolve => {
-        function onDone(e) {
-          if (e.data?.action === 'thread_done') {
-            window.removeEventListener('message', onDone);
+    addLog('[LIST] Đợi tab load...');
+
+    // Đợi tab load xong và inject content_thread.js
+    await new Promise(resolve => {
+      const checkTab = setInterval(() => {
+        try {
+          if (tab.document && tab.document.readyState === 'complete') {
+            clearInterval(checkTab);
+            
+            // Inject content_thread.js vào tab
+            try {
+              const script = tab.document.createElement('script');
+              script.src = chrome.runtime.getURL('content_thread.js');
+              tab.document.head.appendChild(script);
+              addLog('[LIST] Đã inject content_thread.js');
+            } catch (e) {
+              addLog('[LIST] Lỗi inject script: ' + e.message);
+            }
+            
             resolve();
           }
+        } catch (e) {
+          // Cross-origin error
         }
-        window.addEventListener('message', onDone);
-        setTimeout(() => {
+      }, 1000);
+
+      setTimeout(() => {
+        clearInterval(checkTab);
+        resolve();
+      }, 10000);
+    });
+
+    // Đợi thêm 2 giây để script load
+    await new Promise(r => setTimeout(r, 2000));
+
+    // Gửi message để kích hoạt
+    try {
+      const message = { action: 'start_' + type };
+      tab.postMessage(message, '*');
+      addLog('[LIST] Đã gửi message: ' + message.action);
+    } catch (e) {
+      addLog('[LIST] Lỗi gửi message: ' + e.message);
+    }
+
+    // Chờ thread hoàn thành
+    await new Promise(resolve => {
+      function onDone(e) {
+        if (e.data?.action === 'thread_done') {
+          addLog('[LIST] Thread hoàn thành: ' + a.href);
           window.removeEventListener('message', onDone);
           resolve();
-        }, 80000);
-      });
+        }
+      }
+      
+      window.addEventListener('message', onDone);
+      
+      setTimeout(() => {
+        window.removeEventListener('message', onDone);
+        addLog('[LIST] Timeout chờ thread');
+        resolve();
+      }, 80000);
+    });
 
-      if (!tab.closed) tab.close();
+    // Đóng tab
+    try {
+      if (!tab.closed) {
+        tab.close();
+        addLog('[LIST] Đã đóng tab');
+      }
+    } catch (e) {
+      // Bỏ qua lỗi
     }
-    addLog('[LIST] Hoàn thành chuỗi');
-    runningComment = runningDownload = false;
-    document.getElementById('btnComment').textContent = 'START COMMENT';
-    document.getElementById('btnDownload').textContent = 'START DOWNLOAD';
   }
+  
+  addLog('[LIST] Hoàn thành chuỗi');
+  runningComment = runningDownload = false;
+  document.getElementById('btnComment').textContent = 'START COMMENT';
+  document.getElementById('btnDownload').textContent = 'START DOWNLOAD';
+}
+
 })();
