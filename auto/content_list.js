@@ -3,6 +3,7 @@
   let runningComment = false;
   let runningDownload = false;
   let startIdx = 1, endIdx = 1;
+  let allListLogs = []; // Mảng lưu trữ tất cả log từ content_list
 
   /* ---------- chờ DOM ---------- */
   function waitForThreadList(tries = 0) {
@@ -18,8 +19,16 @@
 function addLog(text) {
   const box = document.getElementById('logArea');
   if (!box) return; // chưa có UI → thoát
+  
+  const timestamp = new Date().toLocaleTimeString();
+    const logEntry = `[${timestamp}] ${text}`; //'[LIST] ' + text
+    
+    // Lưu log vào mảng
+    allListLogs.push(logEntry);
+	
+	
   const line = document.createElement('div');
-  line.textContent = '[LIST] ' + text;
+  line.textContent = logEntry;
   box.appendChild(line);
   box.scrollTop = box.scrollHeight; // auto cuộn
   // giữ tối đa 350 dòng
@@ -86,13 +95,8 @@ function initUI() {
   const logArea = document.getElementById('logArea');
   window.addEventListener('message', e => {
     if (e.data?.action === 'log') addLog(e.data.data);
-    if (e.data?.action === 'thread_done') window.removeEventListener('message', arguments.callee);
   });
-  
 }
-
-
-
 
   function updateNumbers() {
     const tbodies = Array.from(document.querySelectorAll('#threadlist table > tbody[id^="normalthread_"]'));
@@ -126,24 +130,31 @@ function initUI() {
 async function startProcessing(type) {
   const tbodiesAll = Array.from(document.querySelectorAll('#threadlist table > tbody[id^="normalthread_"]'));
   const tbodies = tbodiesAll.slice(startIdx - 1, endIdx);
-  addLog('[LIST] Xử lý từ ' + startIdx + ' → ' + endIdx + ' / tổng ' + tbodiesAll.length);
+  addLog('Xử lý từ ' + startIdx + ' → ' + endIdx + ' / tổng ' + tbodiesAll.length);
 
   for (let i = 0; i < tbodies.length; i++) {
     if ((type === 'comment' && !runningComment) || (type === 'download' && !runningDownload)) break;
     const a = tbodies[i].querySelector('th.new a.xst, th.common a.xst, th.lock a.xst');
     if (!a) continue;
-    addLog('[LIST] Mở link: ' + a.href + ' (link số ' + (startIdx + i) + ')');
+    addLog('Mở link: ' + a.href + ' (link số ' + (startIdx + i) + ')');
     
     // Mở tab
-    const tab = window.open(a.href, '_blank');
-    if (!tab) continue;
-
-    addLog('[LIST] Đợi tab load...');
+    const tab = window.open(a.href + '#' + type, '_blank');
+    if (!tab) {
+      addLog('❌ Lỗi: Không thể mở tab');
+      continue;
+    }
 
     // Đợi tab load xong và inject content_thread.js
     await new Promise(resolve => {
       const checkTab = setInterval(() => {
         try {
+          if (tab.closed) {
+            clearInterval(checkTab);
+            resolve();
+            return;
+          }
+          
           if (tab.document && tab.document.readyState === 'complete') {
             clearInterval(checkTab);
             
@@ -160,12 +171,13 @@ async function startProcessing(type) {
             resolve();
           }
         } catch (e) {
-          // Cross-origin error
+          // Cross-origin error - tiếp tục chờ
         }
       }, 1000);
 
       setTimeout(() => {
         clearInterval(checkTab);
+        addLog('[LIST] Timeout chờ tab load');
         resolve();
       }, 10000);
     });
@@ -212,10 +224,45 @@ async function startProcessing(type) {
     }
   }
   
-  addLog('[LIST] Hoàn thành chuỗi');
+  addLog('🎉 Hoàn thành chuỗi xử lý');
+  
+  // Tạo file log tổng hợp khi hoàn thành
+  createSummaryLog(type, startIdx, endIdx, tbodiesAll.length);
+  
   runningComment = runningDownload = false;
   document.getElementById('btnComment').textContent = 'START COMMENT';
   document.getElementById('btnDownload').textContent = 'START DOWNLOAD';
+}
+
+/* ---------- tạo file log tổng hợp ---------- */
+function createSummaryLog(type, startIdx, endIdx, totalThreads) {
+  try {
+    const summary = [
+      '=== TỔNG KẾT CONTENT_LIST ===',
+      `Chế độ: ${type}`,
+      `Phạm vi: ${startIdx} → ${endIdx}`,
+      `Tổng số thread: ${totalThreads}`,
+      `Số thread đã xử lý: ${endIdx - startIdx + 1}`,
+      `Thời gian hoàn thành: ${new Date().toLocaleString()}`,
+      `Tổng số log: ${allListLogs.length}`,
+      '\n=== CHI TIẾT LOG ===',
+      ...allListLogs
+    ].join('\n');
+    
+    const blob = new Blob([summary], { type: 'text/plain;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    
+    // Tạo link download
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `content_list_${type}_${startIdx}-${endIdx}_log.txt`;
+    a.click();
+    
+    addLog(`📄 Đã tạo file log tổng hợp: ${a.download}`);
+    
+  } catch (error) {
+    addLog(`❌ Lỗi tạo file log tổng hợp: ${error.message}`);
+  }
 }
 
 })();

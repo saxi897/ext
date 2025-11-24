@@ -1,23 +1,85 @@
 // popup.js
+let links = [];
+let allPopupLogs = []; // Mảng lưu trữ tất cả log từ popup
+
 /* ---------- các nút start ---------- */
 document.getElementById('btnTxt').onclick = () => downloadOnly('txt');
 document.getElementById('btnJpg').onclick = () => downloadOnly('jpg');
 document.getElementById('startDown').onclick = () => startAll('download');
 document.getElementById('startComment').onclick = () => startAll('comment');
+document.getElementById('translatePage').onclick = () => translateCurrentPage();
+document.getElementById('addLink').onclick = () => addLinks();
 
-let links = [];
+// Lắng nghe log từ background
+chrome.runtime.onMessage.addListener((msg) => {
+  if (msg.action === 'log') {
+    addLog(msg.data);
+  }
+  if (msg.action === 'thread_done') {
+    addLog('✅ Nhận thread_done từ background');
+  }
+});
+
+function addLog(message) {
+  const timestamp = new Date().toLocaleTimeString();
+  const logEntry = `[${timestamp}] ${message}`;
+  
+  // Lưu log vào mảng
+  allPopupLogs.push(logEntry);
+  
+  const logArea = document.getElementById('logArea');
+  const logEntryElement = document.createElement('div');
+  logEntryElement.textContent = logEntry;
+  logArea.appendChild(logEntryElement);
+  logArea.scrollTop = logArea.scrollHeight;
+  console.log(message);
+}
+
+/* ---------- tạo file log tổng hợp từ popup ---------- */
+function createPopupSummaryLog(mode, linksCount) {
+  try {
+    const summary = [
+      '=== TỔNG KẾT POPUP ===',
+      `Chế độ: ${mode}`,
+      `Số link đã xử lý: ${linksCount}`,
+      `Thời gian hoàn thành: ${new Date().toLocaleString()}`,
+      `Tổng số log: ${allPopupLogs.length}`,
+      '\n=== CHI TIẾT LOG ===',
+      ...allPopupLogs
+    ].join('\n');
+    
+    const blob = new Blob([summary], { type: 'text/plain;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    
+    // Tạo link download
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `popup_${mode}_${new Date().toISOString().slice(0, 10)}_log.txt`;
+    a.click();
+    
+    addLog(`📄 Đã tạo file log tổng hợp popup: ${a.download}`);
+    
+  } catch (error) {
+    addLog(`❌ Lỗi tạo file log popup: ${error.message}`);
+  }
+}
 
 /* ---------- add link ---------- */
-document.getElementById('addLink').onclick = () => {
+function addLinks() {
   const raw = document.getElementById('linksInput').value.trim();
   if (!raw) return;
   links = raw.split('\n').map(l => l.trim()).filter(l => l);
   renderList();
-};
+}
 
 function renderList() {
   const box = document.getElementById('logArea');
-  box.innerHTML = links.map((l, i) => `<div>${i + 1}. ${l}</div>`).join('');
+  box.innerHTML = '';
+  links.forEach((l, i) => {
+    const div = document.createElement('div');
+    div.textContent = `${i + 1}. ${l}`;
+    box.appendChild(div);
+  });
 }
 
 /* ---------- start TẤT CẢ link ---------- */
@@ -31,14 +93,17 @@ async function startAll(mode) {
       addLog('Mở: ' + url);
       await processPage(url, mode);
     }
-    addLog('Hoàn thành tất cả link!');
+    addLog('🎉 Hoàn thành tất cả link!');
+	
+	// Tạo file log tổng hợp khi hoàn thành
+    createPopupSummaryLog(mode, links.length);
+	
   } catch (error) {
     console.error('Lỗi:', error);
-    addLog('Có lỗi xảy ra: ' + error.message);
+    addLog('❌ Có lỗi xảy ra: ' + error.message);
   } finally {
-    setTimeout(() => {
-      window.close();
-    }, 1000);
+	  document.getElementById('startDown').disabled = false;
+    document.getElementById('startComment').disabled = false;
   }
 }
 
@@ -249,6 +314,12 @@ async function downloadOnly(type) {
     target: { tabId: tab.id },
     func: getPageData
   });
+  
+  if (!results || !results[0] || !results[0].result) {
+    addLog('Không thể lấy dữ liệu trang');
+    return;
+  }
+  
   const { title, text, imgSrc, date } = results[0].result;
 
   const safeTitle = title.replace(/[\\/:*?"<>|]/g, '_').trim();
@@ -257,16 +328,24 @@ async function downloadOnly(type) {
   const folder = year + '/' + month + '/' + date + '/' + safeTitle + '/';
 
   if (type === 'txt') {
-    if (!text) return alert('Không có nội dung text!');
+    if (!text) {
+      addLog('Không có nội dung text!');
+      return;
+    }
     const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
     const url = URL.createObjectURL(blob);
     await chrome.downloads.download({ url: url, filename: folder + safeTitle + '.txt' });
+    addLog('Đã tải xuống file txt');
   }
 
   if (type === 'jpg') {
-    if (!imgSrc) return alert('Không có cover!');
+    if (!imgSrc) {
+      addLog('Không có cover!');
+      return;
+    }
     const ext = imgSrc.split('.').pop().split('?')[0];
     await chrome.downloads.download({ url: imgSrc, filename: folder + safeTitle + '_cover.' + ext });
+    addLog('Đã tải xuống cover');
   }
 
   window.close();
@@ -310,11 +389,89 @@ function getPageData() {
   return { title, text, imgSrc, date };
 }
 
-function addLog(message) {
-  const logArea = document.getElementById('logArea');
-  const logEntry = document.createElement('div');
-  logEntry.textContent = '[' + new Date().toLocaleTimeString() + '] ' + message;
-  logArea.appendChild(logEntry);
-  logArea.scrollTop = logArea.scrollHeight;
-  console.log(message);
+/* ---------- nút dịch trang ---------- */
+async function translateCurrentPage() {
+  try {
+    // Lấy tab đang active
+    const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+    if (!tab) {
+      addLog('Không tìm thấy tab nào');
+      return;
+    }
+
+    addLog('Đang dịch trang...');
+
+    // Inject các script cần thiết
+    try {
+      // Inject qt.js trước
+      await chrome.scripting.executeScript({
+        target: { tabId: tab.id },
+        files: ['qt.js']
+      });
+      
+      // Inject laongu.js sau
+      await chrome.scripting.executeScript({
+        target: { tabId: tab.id },
+        files: ['laongu.js']
+      });
+      
+      addLog('Đã inject script dịch thuật');
+    } catch (e) {
+      addLog('Lỗi inject script: ' + e.message);
+    }
+
+    // Chờ script load
+    await new Promise(r => setTimeout(r, 2000));
+
+    // Gửi message để kích hoạt dịch
+    try {
+      await chrome.tabs.sendMessage(tab.id, { action: 'translate_page' });
+      addLog('Đã kích hoạt dịch trang');
+    } catch (e) {
+      addLog('Lỗi kích hoạt dịch: ' + e.message);
+      // Thử cách khác - execute script trực tiếp
+      await chrome.scripting.executeScript({
+        target: { tabId: tab.id },
+        func: manuallyActivateTranslation
+      });
+      addLog('Đã kích hoạt dịch bằng script trực tiếp');
+    }
+
+  } catch (error) {
+    addLog('Lỗi dịch trang: ' + error.message);
+  }
+}
+
+// Hàm chạy trong trang để kích hoạt dịch
+function manuallyActivateTranslation() {
+  if (typeof window.activateTranslation === 'function') {
+    window.activateTranslation();
+  } else {
+    // Tạo nút dịch nếu chưa có
+    const button = document.createElement('button');
+    button.innerHTML = '🌐 Dịch';
+    button.style.cssText = `
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      background: #4CAF50;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 4px;
+      cursor: pointer;
+      z-index: 10000;
+    `;
+    button.onclick = function() {
+      if (typeof window.activateTranslation === 'function') {
+        window.activateTranslation();
+      }
+    };
+    document.body.appendChild(button);
+    
+    // Click nút sau 1 giây
+    setTimeout(() => {
+      button.click();
+    }, 1000);
+  }
 }

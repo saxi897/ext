@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
   "name": "TXTNovel Auto",
-  "version": "2.0",
-  "description": "Auto click, auto comment, auto download file .rar từ thread Discuz.",
+  "version": "3.0",
+  "description": "Auto comment, auto download, dịch.",
   "permissions": [
     "tabs",
     "scripting",
@@ -10,12 +10,22 @@
     "downloads",
     "storage"
   ],
+  "icons": {
+		"16": "icon16.png",
+		"32": "icon32.png",
+		"126": "icon126.png"
+	},
   "host_permissions": [
-    "*://*.txtnovel.vip/*"
+    "*://*.txtnovel.vip/*",
+	"*://translate.googleapis.com/*"
   ],
   "action": {
     "default_popup": "popup.html",
-	"default_icon": "logo.png"
+	"default_icon": {
+		"16": "icon16.png",
+		"32": "icon32.png",
+		"126": "icon126.png"
+	}
   },
   "background": {
     "service_worker": "background.js"
@@ -36,8 +46,15 @@
   ],
   "web_accessible_resources": [
     {
-      "resources": ["content_thread.js"],
-      "matches": ["*://*.txtnovel.vip/*"]
+      "resources": [
+	  "content_thread.js",
+	  "qt.js",
+	  "laongu.js",
+	  "ChinesePhienAmWords.txt",
+	  "Names.txt",
+	  "VietPhrase.txt"
+	  ],
+      "matches": ["<all_urls>"]
     }
   ]
 }
