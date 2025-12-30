@@ -39,7 +39,10 @@ Nahona
 ```javascript
 https://raw.githubusercontent.com/SoulGodEve9x9/Vbook-ext/Nahona/plugin.json
 ```
-
+tangiang
+```javascript
+https://raw.githubusercontent.com/giaays/Vbook-Ext/main/plugin.json
+```
 Extension dịch
 ```javascript
 https://raw.githubusercontent.com/Darkrai9x/vbook-extensions/refs/heads/master/translate.json
