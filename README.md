@@ -52,3 +52,7 @@ Extension TTS
 ```javascript
 https://raw.githubusercontent.com/Darkrai9x/vbook-extensions/refs/heads/master/tts.json
 ```
+hình nền
+```javascript
+https://drive.google.com/drive/u/0/mobile/folders/1S63vZJ_JWKgutxZotSAPRx86xbVMAzRG
+```
