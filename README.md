@@ -15,7 +15,7 @@ https://raw.githubusercontent.com/Darkrai9x/vbook-extensions/refs/heads/master/p
 ```javascript
 https://raw.githubusercontent.com/Darkrai9x/vbook-extensions/refs/heads/master/chinese_plugin.json
 ```
-
+nhoccon
 ```javascript
 https://raw.githubusercontent.com/lethituyen/vbooks-extension/refs/heads/master/plugin.json
 ```
@@ -31,11 +31,11 @@ https://raw.githubusercontent.com/Moleys/vbook-ext/main/plugin.json
 ```javascript
 https://raw.githubusercontent.com/dat-bi/ext-vbook/main/plugin.json
 ```
-
+duongden
 ```javascript
 https://raw.githubusercontent.com/duongden/vbook/main/plugin.json
 ```
-
+Nahona
 ```javascript
 https://raw.githubusercontent.com/SoulGodEve9x9/Vbook-ext/Nahona/plugin.json
 ```
