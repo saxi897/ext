@@ -7,6 +7,10 @@ https://github.com/saxi897/ext/raw/refs/heads/main/plugin.json
 ```javascript
 https://raw.githubusercontent.com/mizhm/vbook-extensions/refs/heads/main/plugin.json
 ```
+```javascript
+https://raw.githubusercontent.com/gh369-639/vbook-ext-public/refs/heads/main/plugin.json
+```
+
 Các repository extensions
 ```javascript
 https://raw.githubusercontent.com/Darkrai9x/vbook-extensions/refs/heads/master/plugin.json
