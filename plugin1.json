@@ -1,0 +1,20 @@
+{
+	"metadata": {
+		"author": "saxi",
+		"description": "Vbook extension"
+	},
+	"data": [
+	{
+      "name": "Truyện TR",
+      "author": "vBook",
+      "path": "https://raw.githubusercontent.com/Darkrai9x/vbook-extensions/master/truyentr/plugin.zip",
+      "version": 7,
+      "source": "https://truyenazz.vn/",
+      "icon": "https://raw.githubusercontent.com/Darkrai9x/vbook-extensions/master/truyentr/icon.png",
+      "description": "Đọc truyện trên trang Truyện TR",
+      "type": "novel",
+      "locale": "vi_VN"
+	  }
+
+	]
+}
