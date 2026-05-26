@@ -2,7 +2,7 @@
   "metadata": {
     "name": "笔趣阁-frgls",
     "author": "june",
-    "version": 3,
+    "version": 4,
     "source": "https://m.bqgde.de/",
     "regexp": "https?:\\/\\/(?:www\\.|m\\.)?(?:sad4|bqgde|bqg661)\\.de(?:\\/#)?\\/book\\/\\d+\\/?$",
     "description": "Đọc truyện trên trang sad4",
