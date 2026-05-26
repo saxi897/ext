@@ -1,0 +1,22 @@
+{
+  "metadata": {
+    "name": "Arigl",
+    "author": "june",
+    "version": 1,
+    "source": "https://arigl.com",
+    "regexp": "https://arigl.com/manga/[^/]+/?$",
+    "description": "Đọc truyện trên Arigl",
+    "locale": "vi_VN",
+    "language": "javascript",
+    "type": "comic",
+    "tag": "nsfw"
+  },
+  "script": {
+    "home": "home.js",
+    "genre": "genre.js",
+    "detail": "detail.js",
+    "search": "search.js",
+    "toc": "toc.js",
+    "chap": "chap.js"
+  }
+}

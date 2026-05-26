@@ -4,17 +4,87 @@
 		"description": "Vbook extension"
 	},
 	"data": [
-	{
-      "name": "Truyện TR",
-      "author": "saxi",
-      "path": "https://raw.githubusercontent.com/saxi897/ext/main/truyentr.zip",
-      "version": 7,
-      "source": "https://truyenazz.vn/",
-      "icon": "https://raw.githubusercontent.com/Darkrai9x/vbook-extensions/master/truyentr/icon.png",
-      "description": "Đọc truyện trên trang Truyện TR",
-      "type": "novel",
-      "locale": "vi_VN"
-	  }
+		{
+			"name": "tấn giang",
+			"author": "saxi",
+			"path": "https://raw.githubusercontent.com/saxi897/ext/main/tangiang.zip",
+			"version": 4,
+			"source": "https://www.jjwxc.net/",
+			"icon": "https://raw.githubusercontent.com/saxi897/ext/main/icon/tangiang.png",
+			"description": "Đọc truyện trên trang tấn giang, ext sửa chatgpt",
+			"type": "chinese_novel",
+			"locale": "zh_CN"
+		},
+		{
+			"name": "fqapi",
+			"author": "saxi",
+			"path": "https://raw.githubusercontent.com/saxi897/ext/main/fqapi.zip",
+			"version": 3,
+			"source": "https://fanqienovel.com",
+			"icon": "https://raw.githubusercontent.com/saxi897/ext/main/icon/fqapi.png",
+			"description": "Đọc Truyện fanqienovel",
+			"type": "chinese_novel",
+			"locale": "zh_CN"
+		},
+		{
+			"name": "gongzicp",
+			"author": "saxi",
+			"path": "https://raw.githubusercontent.com/saxi897/ext/main/gongzicp.zip",
+			"version": 1,
+			"source": "https://www.gongzicp.com",
+			"icon": "https://raw.githubusercontent.com/saxi897/ext/main/icon/gongzicp.png",
+			"description": "Đọc Truyện gongzicp",
+			"type": "chinese_novel",
+			"locale": "zh_CN"
+		},
+		{
+			"name": "truyentr",
+			"author": "saxi",
+			"path": "https://raw.githubusercontent.com/saxi897/ext/main/truyentr.zip",
+			"version": 1,
+			"source": "https://truyenazz.vn",
+			"icon": "https://raw.githubusercontent.com/Darkrai9x/vbook-extensions/master/truyentr/icon.png",
+			"description": "Đọc Truyện truyentr",
+			"type": "novel",
+			"locale": "vi_VN"
+		},
+		{
+			"name": "Arigl",
+			"author": "june",
+			"path": "https://raw.githubusercontent.com/saxi897/ext/main/arigl/plugin.zip",
+			"version": 1,
+			"source": "https://arigl.com",
+			"icon": "https://raw.githubusercontent.com/saxi897/ext/main/arigl/icon.png",
+			"description": "Đọc Truyện arigl",
+			"type": "comic",
+			"locale": "vi_VN",
+      "tag": "nsfw"
+		},
+		{
+			"name": "frgls",
+			"author": "june",
+			"path": "https://raw.githubusercontent.com/saxi897/ext/main/frgls/plugin.zip",
+			"version": 3,
+			"source": "https://m.bqgde.de/",
+			"icon": "https://raw.githubusercontent.com/saxi897/ext/main/frgls/icon.png",
+			"description": "Đọc Truyện frgls",
+			"type": "novel",
+			"locale": "chinese_novel",
+      "tag": "nsfw"
+		},
+		{
+			"name": "KamiComic",
+			"author": "june",
+			"path": "https://raw.githubusercontent.com/saxi897/ext/main/kamicomi/plugin.zip",
+			"version": 1,
+			"source": "https://kamicomi.com",
+			"icon": "https://raw.githubusercontent.com/saxi897/ext/main/kamicomi/icon.png",
+			"description": "Đọc Truyện Kami Comic",
+			"type": "comic",
+			"locale": "vi_VN",
+      "tag": "nsfw"
+		},
+		
 
 	]
 }
