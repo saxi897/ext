@@ -83,6 +83,17 @@
 			"type": "comic",
 			"locale": "vi_VN",
       "tag": "nsfw"
+		},
+		{
+			"name": "Bachhoppo",
+			"author": "june",
+			"path": "https://raw.githubusercontent.com/saxi897/ext/main/bachhoppo/plugin.zip",
+			"version": 4,
+			"source": "https://bachhoppo.vercel.app/",
+			"icon": "https://raw.githubusercontent.com/saxi897/ext/main/bachhoppo/icon.png",
+			"description": "Đọc Truyện bachhoppo",
+			"type": "novel",
+			"locale": "vi_VN"
 		}
   ]
 }
