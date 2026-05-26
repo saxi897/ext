@@ -1,10 +1,10 @@
 {
-	"metadata": {
-		"author": "saxi",
-		"description": "Vbook extension"
-	},
-	"data": [
-		{
+  "metadata": {
+    "author": "Saxi",
+    "description": ""
+  },
+  "data": [
+    {
 			"name": "tấn giang",
 			"author": "saxi",
 			"path": "https://raw.githubusercontent.com/saxi897/ext/main/tangiang.zip",
@@ -83,8 +83,6 @@
 			"type": "comic",
 			"locale": "vi_VN",
       "tag": "nsfw"
-		},
-		
-
-	]
+		}
+  ]
 }
