@@ -1,0 +1,22 @@
+{
+  "metadata": {
+    "name": "Kami Comic",
+    "author": "june",
+    "version": 2,
+    "source": "https://kamicomi.com",
+    "regexp": "https://kamicomi\\.com/truyen/[^/]+/?$",
+    "description": "Đọc truyện Kami Comic",
+    "locale": "vi_VN",
+    "language": "javascript",
+    "type": "comic",
+    "tag": "nsfw"
+  },
+  "script": {
+    "home": "home.js",
+    "genre": "genre.js",
+    "detail": "detail.js",
+    "search": "search.js",
+    "toc": "toc.js",
+    "chap": "chap.js"
+  }
+}
