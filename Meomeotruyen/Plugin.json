@@ -1,0 +1,22 @@
+{
+  "metadata": {
+    "name": "MeoMeoTruyen",
+    "author": "june",
+    "version": 1,
+    "source": "https://meomeotruyen.site/",
+    "regexp": "^https://meomeotruyen\\.site/[^/]+/?$",
+    "description": "truyện trên MeoMeoTruyen",
+    "locale": "vi_VN",
+    "language": "javascript",
+    "type": "novel"
+
+  },
+  "script": {
+    "detail": "detail.js",
+    "toc": "toc.js",
+    "chap": "chap.js",
+    "home": "home.js",
+    "genre": "genre.js",
+    "search": "search.js"
+  }
+}
