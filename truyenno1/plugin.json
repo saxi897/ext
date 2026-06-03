@@ -1,0 +1,20 @@
+{
+  "metadata": {
+    "name": "Truyện No1",
+    "author": "june",
+    "version": 1,
+    "source": "https://truyenno1.net/",
+    "regexp": "^https?://(www\\.)?truyenno1\\.net/truyen(?:/[^/]+)?/?$",
+    "description": "Đọc truyện tại truyenno1",
+    "locale": "vi_VN",
+    "type": "novel",
+    "language": "javascript"
+  },
+  "script": {
+    "home": "home.js",
+    "detail": "detail.js",
+    "toc": "toc.js",
+    "chap": "chap.js",
+    "genre": "genre.js"
+  }
+}
