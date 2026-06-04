@@ -2,9 +2,9 @@
     "metadata": {
         "name": "Bachhoppo",
         "author": "june",
-        "version": 4,
+        "version": 5,
         "source": "https://bachhoppo.vercel.app/",
-        "regexp": "bachhoppo.vercel.app/stories/[^/]+/?$",
+        "regexp": "bachhoppo\\d*\\.vercel.app/stories/[^/]+/?$",
         "description": "Đọc truyện trên trang bachhoppo",
         "locale": "vi_VN",
         "language": "javascript",
