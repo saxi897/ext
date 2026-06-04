@@ -2,8 +2,8 @@
     "metadata": {
         "name": "Bachhoppo",
         "author": "june",
-        "version": 5,
-        "source": "https://bachhoppo.vercel.app/",
+        "version": 7,
+        "source": "https://bachhoppo18.vercel.app/",
         "regexp": "bachhoppo\\d*\\.vercel.app/stories/[^/]+/?$",
         "description": "Đọc truyện trên trang bachhoppo",
         "locale": "vi_VN",
@@ -17,5 +17,15 @@
         "chap": "chap.js",
         "genre": "genre.js",
         "search": "search.js"
+    },
+    "config": {
+        "thread_num": 1,
+        "delay": 30000,
+        "CONFIG_URL": {
+            "title": "Domain web",
+            "mode": "input",
+            "format": "text",
+            "default": "https://bachhoppo18.vercel.app"
+        }
     }
 }
