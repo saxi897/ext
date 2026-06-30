@@ -1,10 +1,10 @@
 {
     "metadata": {
-        "name": "Bachhoppo",
+        "name": "bhttpo",
         "author": "june",
-        "version": 10,
-        "source": "https://bachhoppo18.vercel.app/",
-        "regexp": "bachhoppo\\d*\\.vercel.app/stories/[^/]+/?$",
+        "version": 1,
+        "source": "https://bhttpo.top/stories",
+        "regexp": "bhttpo.top/stories/[^/]+/?$",
         "description": "Đọc truyện trên trang bachhoppo",
         "locale": "vi_VN",
         "language": "javascript",
@@ -20,12 +20,12 @@
     },
     "config": {
         "thread_num": 1,
-        "delay": 5000,
+        "delay": 300000,
         "CONFIG_URL": {
             "title": "Domain web",
             "mode": "input",
             "format": "text",
-            "default": "https://bachhoppo18.vercel.app"
+            "default": "https://bhttpo.top"
         }
     }
 }

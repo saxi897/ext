@@ -106,6 +106,18 @@
       "description": "Đọc truyện trên trang truyenno1",
       "type": "novel",
       "locale": "vi_VN"
-    }
+    },
+		{
+			"name": "bhttpo",
+			"author": "june",
+			"path": "https://raw.githubusercontent.com/saxi897/ext/main/bhttpo/plugin.zip",
+			"version": 1,
+			"source": "https://bhttpo.top/",
+			"icon": "https://raw.githubusercontent.com/saxi897/ext/main/bhttpo/icon.png",
+			"description": "Đọc Truyện bhttpo",
+			"type": "novel",
+			"locale": "vi_VN",
+      "tag": "nsfw"
+		}
   ]
 }
