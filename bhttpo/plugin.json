@@ -2,8 +2,8 @@
     "metadata": {
         "name": "bhttpo",
         "author": "june",
-        "version": 1,
-        "source": "https://bhttpo.top/stories",
+        "version": 3,
+        "source": "https://bhttpo.top/",
         "regexp": "bhttpo.top/stories/[^/]+/?$",
         "description": "Đọc truyện trên trang bachhoppo",
         "locale": "vi_VN",
@@ -20,7 +20,7 @@
     },
     "config": {
         "thread_num": 1,
-        "delay": 300000,
+        "delay": 213000,
         "CONFIG_URL": {
             "title": "Domain web",
             "mode": "input",
