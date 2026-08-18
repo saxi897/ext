@@ -84,6 +84,18 @@
 			"locale": "vi_VN",
       "tag": "nsfw"
 		},
+		{
+			"name": "Bachhoppo",
+			"author": "june",
+			"path": "https://raw.githubusercontent.com/saxi897/ext/main/bachhoppo/plugin.zip",
+			"version": 10,
+			"source": "https://bachhoppo18.vercel.app/",
+			"icon": "https://raw.githubusercontent.com/saxi897/ext/main/bachhoppo/icon.png",
+			"description": "Đọc Truyện bachhoppo",
+			"type": "novel",
+			"locale": "vi_VN",
+      "tag": "nsfw"
+		},
     {
       "name": "Truyện No1",
       "author": "june",
@@ -106,6 +118,17 @@
 		"type": "novel",
 		"locale": "vi_VN",
     	"tag": "nsfw"
+	},
+	{ 
+		"name": "Madam Sâu",
+		"author": "june",
+		"path": "https://raw.githubusercontent.com/saxi897/ext/main/kieuduong29/plugin.zip",
+		"version": 1,
+		"source": "https://kieuduong29.wordpress.com/",
+		"icon": "https://raw.githubusercontent.com/saxi897/ext/main/kieuduong29/icon.png",
+		"description": "Đọc Truyện Madam Sâ",
+		"type": "novel",
+		"locale": "vi_VN"
 	}
   ]
 }

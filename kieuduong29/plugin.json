@@ -1,0 +1,22 @@
+{
+  "metadata": {
+    "name": "Madam Sâu",
+    "author": "june",
+    "version": 1,
+    "source": "https://kieuduong29.wordpress.com/",
+    "regexp": "^https:\\/\\/kieuduong29\\.wordpress\\.com\\/\\d{4}\\/\\d{2}\\/\\d{2}\\/([^\\/]+)\\/?$",
+    "description": "Đọc truyện trên trang Madam Sâu",
+    "locale": "vi_VN",
+    "type": "novel",
+    "language": "javascript",
+    "encrypt": true
+  },
+  "script": {
+    "home": "home.js",
+    "genre": "genre.js",
+    "detail": "detail.js",
+    "search": "search.js",
+    "toc": "toc.js",
+    "chap": "chap.js"
+  }
+}
