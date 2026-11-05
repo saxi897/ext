@@ -1,0 +1,26 @@
+{
+  "metadata": {
+    "name": "18文学",
+    "author": "june",
+    "version": 1,
+    "source": "https://wap.po18.in",
+    "description": "Đọc truyện 18+ Trung Quốc từ 18文学",
+    "locale": "zh_CN",
+    "regexp": "wap.po18.in/(info|kan|sort|rank|quanben|search)/.*",
+    "type": "chinese_novel",
+    "language": "javascript",
+    "nsfw": true
+  },
+  "script": {
+        "home": "home.js",
+        "detail": "detail.js",
+        "genre": "genre.js",
+        "toc": "toc.js",
+        "search": "search.js",
+        "chap": "chap.js"
+  },
+    "config": {
+        "thread_num": 1,
+        "delay": 2000
+    }
+}
