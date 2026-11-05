@@ -129,6 +129,18 @@
 		"description": "Đọc Truyện Madam Sâ",
 		"type": "novel",
 		"locale": "vi_VN"
-	}
+	},
+	{
+		"name": "18文学",
+		"author": "june",
+		"path": "https://raw.githubusercontent.com/saxi897/ext/main/18文学/plugin.zip",
+		"version": 1,
+		"source": "https://wap.po18.in",
+		"icon": "https://raw.githubusercontent.com/saxi897/ext/main/18文学/icon.png",
+		"description": "Đọc Truyện 18文学",
+		"type": "novel",
+		"locale": "chinese_novel",
+		"tag": "nsfw"
+	 }
   ]
 }
